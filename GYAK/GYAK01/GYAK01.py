@@ -40,9 +40,12 @@ def is_odd(input_list):
 # %%
 def element_wise_sum(input_list_1, input_list_2):
     output_list = []
-    for i in range(len(input_list_1)):
-        output_list.append(input_list_1[i] + input_list_2[i])
-    return output_list
+    if len(input_list_1) == 0:
+        return [0, 0]
+    else:
+        for i in range(len(input_list_1)):
+            output_list.append(input_list_1[i] + input_list_2[i])
+        return output_list
 
 # %%
 #Create a function that accepts a dictionary and returns its items as a list of tuples
