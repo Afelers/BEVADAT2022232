@@ -9,7 +9,7 @@
 # 1
 def subset(input_list, start_index, end_index):
     output_list = []
-    for i in range(end_index - start_index + 1):
+    for i in range(end_index - start_index):
         output_list.append(input_list[start_index + i])
     return output_list
 
