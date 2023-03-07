@@ -17,6 +17,7 @@ import numpy as np
 #create_array()
 
 # %%
+# 1
 def create_array(size=(2,2)) -> np.array:
     return np.full(size, 0)
 
@@ -27,6 +28,7 @@ def create_array(size=(2,2)) -> np.array:
 #set_one()
 
 # %%
+# 2
 def set_one(arr : list) -> np.array:
     arr = np.array(arr)
     np.fill_diagonal(arr, 1)
@@ -39,9 +41,12 @@ def set_one(arr : list) -> np.array:
 # do_transpose()
 
 # %%
+# 3
 def do_transpose(arr : list) -> np.array:
     arr = np.array(arr)
     return arr.transpose()
+
+print(do_transpose([[]]))
 
 # %%
 # Készíts egy olyan függvényt ami az array-ben lévő értékeket N tizenedjegyik kerekíti, ha nincs megadva ez a paraméter, akkor legyen az alapértelmezett a kettő 
@@ -50,9 +55,10 @@ def do_transpose(arr : list) -> np.array:
 # round_array()
 
 # %%
+# 4
 def round_array(arr : list, N=2) -> np.array:
     arr = np.array(arr)
-    return np.around(arr, decimals=N)
+    return np.around(arr, decimals=N).astype(float)
 
 # %%
 # Készíts egy olyan függvényt, ami a bementként kapott 0 és 1 ből álló tömben a 0 - False-ra, az 1 True-ra cserélni
@@ -61,9 +67,10 @@ def round_array(arr : list, N=2) -> np.array:
 # bool_array()
 
 # %%
+# 5
 def bool_array(arr : list) -> np.array:
-    arr = np.array(arr)
-    return arr > 0
+    arr = np.array(arr).astype(bool)
+    return arr
 
 # %%
 # Készíts egy olyan függvényt, ami a bementként kapott 0 és 1 ből álló tömben a 1 - False-ra az 0 True-ra cserélni
@@ -72,9 +79,11 @@ def bool_array(arr : list) -> np.array:
 # invert_bool_array()
 
 # %%
-def bool_array(arr : list) -> np.array:
-    arr = np.array(arr)
-    return arr < 1
+# 6
+def invert_bool_array(arr : list) -> np.array:
+    arr = np.array(arr).astype(bool)
+    arr = np.invert(arr)
+    return arr
 
 # %%
 # Készíts egy olyan függvényt ami a paraméterként kapott array-t kilapítja
@@ -84,6 +93,7 @@ def bool_array(arr : list) -> np.array:
 
 
 # %%
+# 7
 def flatten(arr : list) -> np.array:
     arr = np.array(arr)
     return arr.reshape(-1)
