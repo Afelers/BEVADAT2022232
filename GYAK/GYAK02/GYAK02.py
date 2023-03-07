@@ -46,8 +46,6 @@ def do_transpose(arr : list) -> np.array:
     arr = np.array(arr)
     return arr.transpose()
 
-print(do_transpose([[]]))
-
 # %%
 # Készíts egy olyan függvényt ami az array-ben lévő értékeket N tizenedjegyik kerekíti, ha nincs megadva ez a paraméter, akkor legyen az alapértelmezett a kettő 
 # Be: [0.1223, 0.1675], 2
@@ -90,7 +88,6 @@ def invert_bool_array(arr : list) -> np.array:
 # Be: [[1,2], [3,4]]
 # Ki: [1,2,3,4]
 # flatten()
-
 
 # %%
 # 7
