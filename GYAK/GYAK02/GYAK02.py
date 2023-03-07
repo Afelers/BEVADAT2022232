@@ -56,7 +56,7 @@ def do_transpose(arr : list) -> np.array:
 # 4
 def round_array(arr : list, N=2) -> np.array:
     arr = np.array(arr)
-    return np.around(arr, decimals=N).astype(float)
+    return np.around(arr, decimals=N)
 
 # %%
 # Készíts egy olyan függvényt, ami a bementként kapott 0 és 1 ből álló tömben a 0 - False-ra, az 1 True-ra cserélni
