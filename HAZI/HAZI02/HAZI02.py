@@ -183,6 +183,4 @@ def get_act_date() -> np.datetime64:
 def sec_from_1970() -> int:
     return int((np.datetime64('now') - np.datetime64('1970-01-01 00:02:00')) / np.timedelta64(1, 's'))
 
-sec_from_1970()
-
 
