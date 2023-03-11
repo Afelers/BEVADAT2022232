@@ -42,12 +42,9 @@ def compare_two_array(arr1 : np.array,arr2 : np.array) -> np.array:
 # %%
 # 3
 def get_array_shape(arr : np.array) -> str:
-    if len(arr.shape) == 3:
-        return f"sor: {arr.shape[0]}, oszlop: {arr.shape[1]}, melyseg: {arr.shape[2]}"
-    if len(arr.shape) == 2:
-        return f"sor: {arr.shape[0]}, oszlop: {arr.shape[1]}, melyseg: 1"
-    else:
-        return f"sor: {arr.shape[0]}, oszlop: 1, melyseg: 1"
+    actual_shape = np.array(arr.shape)
+    actual_shape = np.insert(actual_shape, 0, [1] * (3 - len(actual_shape)))
+    return f"sor: {actual_shape[1]}, oszlop: {actual_shape[2]}, melyseg: {actual_shape[0]}"
 
 # %%
 # Készíts egy olyan függvényt, aminek segítségével elő tudod állítani egy neurális hálózat tanításához szükséges pred-et egy numpy array-ből. 
@@ -60,7 +57,9 @@ def get_array_shape(arr : np.array) -> str:
 # %%
 # 4
 def encode_Y(input_array : np.array, class_num : int) -> np.array:
-    encoded_array = np.zeros((class_num, len(input_array)))
+    encoded_array = np.zeros((len(input_array), class_num))
+    if input_array.size == 0:
+        return 0
     encoded_array[np.arange(len(encoded_array)), input_array] = 1
     return encoded_array.astype(int)
 
@@ -181,6 +180,6 @@ def get_act_date() -> np.datetime64:
 # %%
 # 14
 def sec_from_1970() -> int:
-    return int((np.datetime64('now') - np.datetime64('1970-01-01 00:02:00')) / np.timedelta64(1, 's'))
+    return np.timedelta64(np.datetime64('now') - np.datetime64('1970-01-01 00:02:00')).astype(int)
 
 
