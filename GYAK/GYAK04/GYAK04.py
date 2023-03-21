@@ -28,8 +28,6 @@ stats = {"country": ["Brazil", "Russia", "India", "China", "South Africa"],
 def dict_to_dataframe(input_dict : dict) -> pd.core.frame.DataFrame:
     return pd.DataFrame(input_dict)
 
-df = dict_to_dataframe(stats)
-
 # %%
 '''
 Készíts egy függvényt ami a bemeneti DataFrame-ből vissza adja csak azt az oszlopot amelynek a neve a bemeneti string-el megegyező.
@@ -102,6 +100,7 @@ def plot_population(input_df : pd.core.frame.DataFrame):
     new_df = input_df.copy()
     fig, ax = plt.subplots()
     ax.bar(new_df['country'], new_df['population'])
+    ax.set_title('Population of Countries')
     ax.set_xlabel('Country')
     ax.set_ylabel('Population (millions)')
     return fig
