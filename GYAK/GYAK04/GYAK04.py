@@ -104,7 +104,7 @@ def plot_population(input_df : pd.core.frame.DataFrame):
     ax.bar(new_df['country'], new_df['population'])
     ax.set_xlabel('Country')
     ax.set_ylabel('Population (millions)')
-    return plt.show()
+    return fig
 
 # %%
 '''
@@ -126,6 +126,6 @@ def plot_area(input_df : pd.core.frame.DataFrame):
     fig, ax = plt.subplots()
     ax.pie(new_df['area'], labels=new_df['country'])
     ax.set_title('Area of Countries')
-    return plt.show()
+    return fig
 
 
