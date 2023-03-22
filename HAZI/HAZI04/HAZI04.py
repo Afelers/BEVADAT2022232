@@ -25,8 +25,8 @@ def csv_to_df(path : str) -> pd.core.frame.DataFrame:
     return pd.read_csv(path)
 
 # test values, remove when done
-df = csv_to_df('StudentsPerformance.csv')
-df.head()
+#df = csv_to_df('StudentsPerformance.csv')
+#df.head()
 
 # %%
 '''
