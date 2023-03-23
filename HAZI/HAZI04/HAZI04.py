@@ -40,7 +40,7 @@ függvény neve: capitalize_columns
 '''
 
 # %%
-# 2
+# 2     ha most se jó akkor list(map())
 def capitalize_columns(input_df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     new_df = input_df.copy()
     new_df.columns = map(lambda x: x.upper() if 'e' not in x else x, new_df.columns)
@@ -94,14 +94,12 @@ függvény neve: average_scores
 # 5
 def average_scores(input_df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     new_df = input_df.copy()
-    grouped = new_df.groupby("parental level of education").aggregate(["math score"], ["reading score"], ["writing score"]).mean()
-    return grouped
-
-average_scores(df)
+    new_df["avg"] = (new_df["math score"] + new_df["reading score"] + new_df["writing score"]) / 3
+    return pd.DataFrame(new_df.groupby("parental level of education")["avg"].mean())
 
 # %%
 '''
-Készíts egy függvényt, ami a bementeti Dataframet kiegészíti egy 'age' oszloppal, töltsük fel random 18-66 év közötti értékekkel.
+Készíts egy függvényt, ami a bemeneti Dataframet kiegészíti egy 'age' oszloppal, töltsük fel random 18-66 év közötti értékekkel.
 A random.randint() függvényt használd, a random sorsolás legyen seedleve, ennek értéke legyen 42.
 
 Egy példa a bemenetre: df_data
@@ -112,6 +110,11 @@ függvény neve: add_age
 
 # %%
 # 6
+def add_age(input_df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+    new_df = input_df.copy()
+    np.random.seed(42)
+    new_df["age"] = np.random.randint(18, 67, new_df.shape[0])
+    return new_df
 
 # %%
 '''
@@ -125,6 +128,11 @@ függvény neve: female_top_score
 
 # %%
 # 7
+def female_top_score(input_df : pd.core.frame.DataFrame) -> tuple:
+    new_df = input_df.copy()
+    new_df["avg"] = (new_df["math score"] + new_df["reading score"] + new_df["writing score"]) / 3
+    max_girls = new_df.loc[(new_df["gender"] == "female") & (new_df["avg"] == new_df["avg"].max())]
+    return tuple([max_girls.iloc[0]["math score"], max_girls.iloc[0]["reading score"], max_girls.iloc[0]["writing score"]])
 
 # %%
 '''
@@ -144,7 +152,12 @@ függvény neve: add_grade
 '''
 
 # %%
-# 8
+# 8      ha nem jó hogy új oszlopot adtam hozzá akkor tömbbel kell megoldani helyette
+def add_grade(input_df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+    new_df = input_df.copy()
+    new_df["percentage"] = (new_df["math score"] + new_df["reading score"] + new_df["writing score"]) / 3
+    new_df["grade"] = list(map(lambda x: 'A' if x >= 90 else ('B' if x >= 80 else ('C' if x >= 70 else ('D' if x >= 60 else 'F'))), new_df["percentage"]))
+    return new_df
 
 # %%
 '''
@@ -163,6 +176,14 @@ függvény neve: math_bar_plot
 
 # %%
 # 9
+def math_bar_plot(input_df : pd.core.frame.DataFrame):
+    new_df = input_df.copy()
+    fig = plt.figure()
+    ax = fig.add_axes(new_df.groupby("gender")["math score"].mean().plot(kind='bar'))
+    ax.set_title('Average Math Score by Gender')
+    ax.set_xlabel('Gender')
+    ax.set_ylabel('Math Score')
+    return fig
 
 # %%
 ''' 
@@ -181,6 +202,14 @@ függvény neve: writing_hist
 
 # %%
 # 10
+def writing_hist(input_df : pd.core.frame.DataFrame):
+    new_df = input_df.copy()
+    fig, ax = plt.subplots()
+    plt.hist(new_df["writing score"])
+    ax.set_title('Distribution of Writing Scores')
+    ax.set_xlabel('Writing Score')
+    ax.set_ylabel('Number of Students')
+    return fig
 
 # %%
 ''' 
@@ -199,5 +228,13 @@ függvény neve: ethnicity_pie_chart
 
 # %%
 # 11
+def ethnicity_pie_chart(input_df : pd.core.frame.DataFrame):
+    new_df = input_df.copy()
+    fig, ax = plt.subplots()
+    kek = new_df.groupby("race/ethnicity")["gender"].count()
+    print(kek.values)
+    ax.pie(kek.values, labels=kek.index, autopct='%1.1f%%')
+    ax.set_title('Proportion of Students by Race/Ethnicity')
+    return fig
 
 
