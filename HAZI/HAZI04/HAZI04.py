@@ -25,8 +25,8 @@ def csv_to_df(path : str) -> pd.core.frame.DataFrame:
     return pd.read_csv(path)
 
 # test values, remove when done
-#df = csv_to_df('StudentsPerformance.csv')
-#df.head()
+df = csv_to_df('StudentsPerformance.csv')
+df.head()
 
 # %%
 '''
@@ -43,7 +43,7 @@ függvény neve: capitalize_columns
 # 2
 def capitalize_columns(input_df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     new_df = input_df.copy()
-    new_df.columns = map(lambda x: x.capitalize() if 'e' not in x else x, new_df.columns)
+    new_df.columns = map(lambda x: x.upper() if 'e' not in x else x, new_df.columns)
     return new_df
 
 # %%
@@ -94,6 +94,10 @@ függvény neve: average_scores
 # 5
 def average_scores(input_df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     new_df = input_df.copy()
+    grouped = new_df.groupby("parental level of education").aggregate(["math score"], ["reading score"], ["writing score"]).mean()
+    return grouped
+
+average_scores(df)
 
 # %%
 '''
