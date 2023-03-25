@@ -90,8 +90,7 @@ függvény neve: average_scores
 # 5
 def average_scores(input_df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     new_df = input_df.copy()
-    new_df["avg"] = (new_df["math score"] + new_df["reading score"] + new_df["writing score"]) / 3
-    return pd.DataFrame(new_df.groupby("parental level of education")["avg"].mean())
+    return new_df.groupby("parental level of education")["math score", "reading score", "writing score"].mean()
 
 # %%
 '''
@@ -151,8 +150,8 @@ függvény neve: add_grade
 # 8      ha nem jó hogy új oszlopot adtam hozzá akkor tömbbel kell megoldani helyette
 def add_grade(input_df : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     new_df = input_df.copy()
-    new_df["percentage"] = (new_df["math score"] + new_df["reading score"] + new_df["writing score"]) / 3
-    new_df["grade"] = list(map(lambda x: 'A' if x >= 90 else ('B' if x >= 80 else ('C' if x >= 70 else ('D' if x >= 60 else 'F'))), new_df["percentage"]))
+    percentages = (new_df["math score"] + new_df["reading score"] + new_df["writing score"]) / 3
+    new_df["grade"] = list(map(lambda x: 'A' if x >= 90 else ('B' if x >= 80 else ('C' if x >= 70 else ('D' if x >= 60 else 'F'))), percentages))
     return new_df
 
 # %%
@@ -174,8 +173,9 @@ függvény neve: math_bar_plot
 # 9
 def math_bar_plot(input_df : pd.core.frame.DataFrame):
     new_df = input_df.copy()
-    fig = plt.figure()
-    ax = fig.add_axes(new_df.groupby("gender")["math score"].mean().plot(kind='bar'))
+    fig, ax = plt.subplots()
+    kek = new_df.groupby("gender")["math score"].mean()
+    ax.bar(kek.index, kek.values)
     ax.set_title('Average Math Score by Gender')
     ax.set_xlabel('Gender')
     ax.set_ylabel('Math Score')
@@ -228,7 +228,6 @@ def ethnicity_pie_chart(input_df : pd.core.frame.DataFrame):
     new_df = input_df.copy()
     fig, ax = plt.subplots()
     kek = new_df.groupby("race/ethnicity")["gender"].count()
-    print(kek.values)
     ax.pie(kek.values, labels=kek.index, autopct='%1.1f%%')
     ax.set_title('Proportion of Students by Race/Ethnicity')
     return fig
