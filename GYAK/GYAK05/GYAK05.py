@@ -24,7 +24,7 @@ class KNNClassifier:
 
     def train_test_split(self, features : np.ndarray,
                         labels : np.ndarray):
-        test_size = int(len(features) * self.test_split_raito)
+        test_size = int(len(features) * self.test_split_ratio)
         train_size = len(features) - test_size
         assert len(features) == test_size + train_size, "Size mismatch!"    # False kiértékelésre AssertionErrort dob a megadott üzenettel
         self.x_train, self.y_train = features[: train_size, :], labels[: train_size]
