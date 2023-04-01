@@ -53,6 +53,7 @@ class KNNClassifier:
     def best_k(self) -> Tuple[int, float]:
         accuracies = []
         for i in range(1, 21):
-            y_pred = self.predict(self.x_train, self.y_train, self.x_test, i)
-            accuracies.append(self.accuracy(self.y_test, y_pred))
-        return (accuracies.index(max(accuracies)), max(accuracies))
+            self.k = i
+            self.y_preds = self.predict(self.x_test)
+            accuracies.append(self.accuracy(self.y_test, self.y_preds))
+        return (accuracies.index(max(accuracies)) + 1, round(max(accuracies), 2))
