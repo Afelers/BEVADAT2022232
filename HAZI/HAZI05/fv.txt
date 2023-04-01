@@ -1,1 +1,15 @@
-TODO write this thing cuz apparently we are not already overloaded with tasks from other courses
+k_neighbors(): property ami visszaadja a konstruktoron kapott k értéket
+
+load_csv(): beolvassa egy dataframe-be a megadott .csv-t és keverünk az elemeken, x és y-ba az első n-1 illetve n-edik oszlopot mentjük kinda hard code-olva, mert most amilyen teszt .csv-ket használunk, azokban az utolsó oszlop tartalmazza a lehetséges kimeneteket
+
+train_test_split(): szükségünk van teszt és tanító adatokra, ezeket a konstruktoron kapott arány szerint osztjuk el, illetve hogy a későbbiekben össze tudja hasonlítani a különböző series értékeket újraindexelünk, amik a korábbi sample() miatt megmaradtak keverve
+
+euclidean(): visszaadja a megadott pontok közti távolságokat, sum paramétereként axis=1-et adunk meg, hogy az oszlopokra végezze az összeadásokat
+
+predict(): kiszámolja a távolságot a meglévő és új pontok között, a távolságok közül megnézzük az első k elem leggyakoribb előfordulását minden pontra, ezeket kigyűjtjük egy listába
+
+accuracy(): megszámolja a true pozitív/negatív értékeket és visszaadja ez hány százaléka az összes adatnak
+
+confusion_matrix(): visszaadja a true és false pozitív és negatív értékeket a teszt adatok és a prediktált értékek alapján azok hány helyen egyeznek meg illetve hány helyen különböznek
+
+best_k(): megnézi 1-20-ig megadva a k értékeket milyen pontosságú eredmények jönnek ki, ezeket eltárolja egy tömbben és visszaadja a legnagyobb indexét illetve értékét
