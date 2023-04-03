@@ -54,6 +54,6 @@ class KNNClassifier:
         accuracies = []
         for i in range(1, 21):
             self.k = i
-            self.y_preds = self.predict(self.x_test)
-            accuracies.append(self.accuracy(self.y_test, self.y_preds))
+            self.predict(self.x_test)
+            accuracies.append(self.accuracy())
         return (accuracies.index(max(accuracies)) + 1, round(max(accuracies), 2))
