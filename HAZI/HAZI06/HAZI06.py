@@ -51,3 +51,11 @@ HAZI-
 ##                                                              ##
 ##################################################################
 """
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from src.DecisionTreeClassifier import DecisionTreeClassifier
+
+data = pd.read_csv('NJ.csv')
+data.head()
