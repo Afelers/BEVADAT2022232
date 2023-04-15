@@ -55,7 +55,56 @@ HAZI-
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from NJCleaner import NJCleaner
 from src.DecisionTreeClassifier import DecisionTreeClassifier
 
-data = pd.read_csv('NJ.csv')
-data.head()
+NJCleaner("NJ.csv").prep_df(path="NJ_clean.csv")
+
+data = pd.read_csv('NJ_clean.csv')
+X = data.iloc[:, : -1].values
+Y = data.iloc[:, -1].values.reshape(-1, 1)
+x_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=.2, random_state=41)
+
+classifier = DecisionTreeClassifier(min_samples_split=100, max_depth=11)
+classifier.fit(x_train, Y_train)
+Y_pred = classifier.predict(X_test)
+print("min_samples:", 100, "max_depth:", 11, "accuracy_score:", accuracy_score(Y_test, Y_pred))
+
+#min_samples: 2 max_depth: 2 accuracy_score: 0.7823333333333333
+#min_samples: 2 max_depth: 3 accuracy_score: 0.7839166666666667
+#min_samples: 2 max_depth: 4 accuracy_score: 0.7849166666666667
+#min_samples: 3 max_depth: 2 accuracy_score: 0.7823333333333333
+#min_samples: 3 max_depth: 3 accuracy_score: 0.7839166666666667
+#min_samples: 3 max_depth: 4 accuracy_score: 0.7849166666666667
+#min_samples: 4 max_depth: 2 accuracy_score: 0.7823333333333333
+#min_samples: 4 max_depth: 3 accuracy_score: 0.7839166666666667
+#min_samples: 4 max_depth: 4 accuracy_score: 0.7849166666666667
+#min_samples: 5 max_depth: 2 accuracy_score: 0.7823333333333333
+#min_samples: 5 max_depth: 3 accuracy_score: 0.7839166666666667
+#min_samples: 5 max_depth: 4 accuracy_score: 0.7849166666666667
+#min_samples: 2 max_depth: 6 accuracy_score: 0.7885
+#min_samples: 2 max_depth: 7 accuracy_score: 0.7934166666666667
+
+#min_samples: 30 max_depth: 10 accuracy_score: 0.80075
+#min_samples: 30 max_depth: 11 accuracy_score: 0.8018333333333333
+#min_samples: 30 max_depth: 12 accuracy_score: 0.7995
+#min_samples: 30 max_depth: 13 accuracy_score: 0.798
+#min_samples: 50 max_depth: 10 accuracy_score: 0.8010833333333334
+#min_samples: 50 max_depth: 11 accuracy_score: 0.8026666666666666
+#min_samples: 50 max_depth: 12 accuracy_score: 0.8
+#min_samples: 50 max_depth: 13 accuracy_score: 0.7985
+
+#min_samples: 60 max_depth: 11 accuracy_score: 0.8034166666666667
+#min_samples: 70 max_depth: 11 accuracy_score: 0.8033333333333333
+#min_samples: 80 max_depth: 11 accuracy_score: 0.8030833333333334
+#min_samples: 90 max_depth: 11 accuracy_score: 0.803
+#min_samples: 100 max_depth: 11 accuracy_score: 0.8035833333333333 <--
+#min_samples: 110 max_depth: 11 accuracy_score: 0.80275
+#min_samples: 120 max_depth: 11 accuracy_score: 0.8023333333333333
+#min_samples: 130 max_depth: 11 accuracy_score: 0.801
+#min_samples: 140 max_depth: 11 accuracy_score: 0.8008333333333333
+
+# Az első tesztek eredményénél úgy tűnt, nincs különbség pontosságban, mindegy milyen min_samples_split értéket adok meg, ugyanazok a számok jönnek ki.
+# Viszont amikor a max_depth értékét 8 vagy annál nagyobbra állítottam elszállt hibával és a korábbi hetek után eleinte nem tudtam eldönteni, hogy az órán másoltatott kóddal van probléma vagy a paraméterekkel.
+# Ekkor min_samples_split értékét hasraütésre felvettem egy nagyobb értékre, és végre lettek eredmények.
+# Ezután egyre inkább úgy tűnt, max_depth=11-el lehet a legjobb eredményt elérni, úgyhogy a min_samples értékével játszottam még.

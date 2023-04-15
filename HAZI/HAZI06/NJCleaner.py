@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime
 
 class NJCleaner:
     
@@ -21,13 +22,8 @@ class NJCleaner:
         return filtered
 
     def convert_scheduled_time_to_part_of_the_day(self):
-        parts_of_the_day = list(map(lambda x: "late_night" if pd.to_datetime("00:00").time() < pd.to_datetime(x) and pd.to_datetime(x) < pd.to_datetime("03:59").time()
-                                    else ("early_morning" if pd.to_datetime("04:00").time() < pd.to_datetime(x) and pd.to_datetime(x) < pd.to_datetime("07:59").time()
-                                    else ("morning" if pd.to_datetime("08:00").time() < pd.to_datetime(x) and pd.to_datetime(x) < pd.to_datetime("11:59").time()
-                                    else ("afternoon" if pd.to_datetime("12:00").time() < pd.to_datetime(x) and pd.to_datetime(x) < pd.to_datetime("15:59").time()
-                                    else ("evening" if pd.to_datetime("16:00").time() < pd.to_datetime(x) and pd.to_datetime(x) < pd.to_datetime("19:59").time()
-                                    else "night")))), self.data['scheduled_time']))
-
+        self.data['scheduled_time'] = pd.to_datetime(self.data['scheduled_time'])
+        parts_of_the_day = list(map(lambda x: "late_night" if x.hour < 4 else ("early_morning" if x.hour < 8 else ("morning" if x.hour < 12 else ("afternoon" if x.hour < 16 else ("evening" if x.hour < 20 else "night")))), self.data['scheduled_time']))
         filtered = self.data.drop(columns=['scheduled_time'])
         filtered["part_of_the_day"] = parts_of_the_day
         return filtered
@@ -43,7 +39,7 @@ class NJCleaner:
         return output
 
     def save_first_60k(self, path : str):
-        self.data.head(60000).to_csv(path)
+        self.data.head(60000).to_csv(path, index=False)
 
     def prep_df(self, path='data/NJ.csv'):
         self.data = self.order_by_scheduled_time()
@@ -52,4 +48,4 @@ class NJCleaner:
         self.data = self.convert_scheduled_time_to_part_of_the_day()
         self.data = self.convert_delay()
         self.data = self.drop_unnecessary_columns()
-        self.data = self.save_first_60k(path)
+        self.save_first_60k(path)
