@@ -1,7 +1,7 @@
 import torch
-from Agents.agents.DQN_sampling import DQN
-from Agents.agents.DQN_sampling import MemoryBuffer
-from trajectorytracking.Envs.env_straight import Straight_env
+from oe_agent_memory import DQN
+from uniform_memory import MemoryBuffer
+from env_straight import Straight_env
 
 PATH = "dqn.pt"
 

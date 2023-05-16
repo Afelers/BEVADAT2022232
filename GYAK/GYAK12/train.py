@@ -7,9 +7,9 @@ np.random.seed(0)
 torch.manual_seed(0)
 random.seed(0)
 
-from Agents.oe_agent_memory import DQN
-from Agents.uniform_memory import MemoryBuffer
-from trajectorytracking.Envs.env_straight import Straight_env
+from oe_agent_memory import DQN
+from uniform_memory import MemoryBuffer
+from env_straight import Straight_env
 
 # Params
 Net = torch.nn.Sequential(
